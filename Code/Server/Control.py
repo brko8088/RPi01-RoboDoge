@@ -61,8 +61,14 @@ class Control:
         x_5=l1*math.cos(a)
         l23=math.sqrt((z-x_5)**2+(y-x_4)**2+(x-x_3)**2)
         w=(x-x_3)/l23
+        print("value of w: " + str(w))
         v=(l2*l2+l23*l23-l3*l3)/(2*l2*l23)
-        b=math.asin(round(w,2))-math.acos(round(v,2))
+        print("value of v: " + str(v))
+        print("value of math.asin:" + str(round(w,5)))
+        print("value of math.acos:" + str(math.acos(round(v,5))))
+        b=math.asin(round(w,5))-math.acos(round(v,5))
+        print("value of b: " + str(b))
+        print("");
         c=math.pi-math.acos(round((l2**2+l3**2-l23**2)/(2*l3*l2),2))
         a=round(math.degrees(a))
         b=round(math.degrees(b))
