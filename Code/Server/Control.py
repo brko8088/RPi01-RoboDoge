@@ -32,6 +32,11 @@ class Control:
         self.Thread_conditiona=threading.Thread(target=self.condition)
         self.calibration()
         self.relax(True)
+        #self.link_1 = 23 hip distance to next link
+        #self.link_2 = 55 from hip to knee
+        #self.link_3 = 55 from knee to tip of the leg
+        
+        
     def readFromTxt(self,filename):
         file1 = open(filename + ".txt", "r")
         list_row = file1.readlines()
@@ -54,22 +59,36 @@ class Control:
             file2.write('\n')
         file2.close()
         
-    def coordinateToAngle(self,x,y,z,l1=23,l2=55,l3=55):
-        a=math.pi/2-math.atan2(z,y)
-        x_3=0
-        x_4=l1*math.sin(a)
-        x_5=l1*math.cos(a)
-        l23=math.sqrt((z-x_5)**2+(y-x_4)**2+(x-x_3)**2)
-        w=(x-x_3)/l23
-        print("value of w: " + str(w))
-        v=(l2*l2+l23*l23-l3*l3)/(2*l2*l23)
-        print("value of v: " + str(v))
-        print("value of math.asin:" + str(round(w,5)))
-        print("value of math.acos:" + str(math.acos(round(v,5))))
+    def coordinateToAngle(self,x,y,z):
+        link_1 = 23
+        link_2 = 55
+        link_3 = 55
+        
+        VERBOSE = False
+        
+        a = math.pi/2-math.atan2(z,y)
+        x_3 = 0
+        x_4 = link_1 * math.sin(a)
+        x_5 = link_1 * math.cos(a)
+        link_2_to_3 = math.sqrt(( z - x_5 )** 2 + ( y - x_4 )** 2 + ( x - x_3 )**2)
+        # Originally named l23, I named it link_2_to_3 until I figure what the variable is.
+        
+        w = ( x - x_3 ) / link_2_to_3
+        if (VERBOSE): print("value of w: " + str(w))
+        
+        v = ( link_2 * link_2 + link_2_to_3 * link_2_to_3 - link_3 * link_3 ) / ( 2 * link_2 * link_2_to_3 )
+        
+        if (VERBOSE):
+            print("value of v: " + str(v))
+            print("value of math.asin:" + str(round(w,5)))
+            print("value of math.acos:" + str(math.acos(round(v,5))))
+        
         b=math.asin(round(w,5))-math.acos(round(v,5))
-        print("value of b: " + str(b))
-        print("");
-        c=math.pi-math.acos(round((l2**2+l3**2-l23**2)/(2*l3*l2),2))
+        if (VERBOSE):
+            print("value of b: " + str(b))
+            print("");
+            
+        c=math.pi-math.acos(round((link_2**2 + link_3**2 - link_2_to_3**2) / (2* link_3 * link_2),2))
         a=round(math.degrees(a))
         b=round(math.degrees(b))
         c=round(math.degrees(c))
