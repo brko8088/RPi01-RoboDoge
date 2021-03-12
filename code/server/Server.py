@@ -20,7 +20,7 @@ class Server:
     def __init__(self):
         
         self.tcp_flag=False
-        self.led=Led()
+        #self.led=Led()
         self.servo=Servo()
         self.adc=ADS7830()
         self.buzzer=Buzzer()
