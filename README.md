@@ -20,7 +20,7 @@ This project was picked around the time I was gearing up for my internship at Bo
 
 > A Robot Dog Kit for Raspberry Pi.
 
-<img src='Picture/icon.png' width='30%'/>
+<img src='picture/icon.png' width='30%'/>
 
 ### Download
 
